@@ -7,14 +7,9 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-const id = Date.now();
-const timeStamp = Date.now();
+store.dispatch(createPost('1st Post', 'This is the first post'));
 
-store.dispatch(createPost(id, '1st Post', 'This is the first post', timeStamp));
-
-store.dispatch(
-  createPost(id, '2nd Post', 'This is the second post', timeStamp)
-);
+store.dispatch(createPost('2nd Post', 'This is the second post'));
 
 console.log('initial state', store.getState());
 
