@@ -15,6 +15,7 @@ class Blog extends React.Component {
     postTitle: '',
     postDescription: '',
     postTag: '',
+    filteredTag: [],
   };
 
   setPostTitle = ({ target: { value: postTitle } }) => {
@@ -27,6 +28,14 @@ class Blog extends React.Component {
 
   setPostTag = ({ target: { value: postTag } }) => {
     this.setState({ postTag });
+    this.autoCompleteTags(this.state.postTag);
+  };
+
+  autoCompleteTags = query => {
+    const tagRegex = new RegExp(query, 'gi');
+    const { tags } = this.props;
+    const filteredTag = tags.filter(tag => tagRegex.test(tag));
+    this.setState({ filteredTag });
   };
 
   sendNewPost = e => {
@@ -40,10 +49,12 @@ class Blog extends React.Component {
       postTitle: '',
       postDescription: '',
       postTag: '',
+      filteredTag: [],
     });
   };
   render() {
-    const { postTitle, postDescription, postTag } = this.state;
+    const { postTitle, postDescription, postTag, filteredTag } = this.state;
+    console.log(filteredTag);
     return (
       <div>
         <h1>BLOG WITH REDUX</h1>
@@ -89,6 +100,11 @@ class Blog extends React.Component {
             onChange={this.setPostTag}
             value={postTag}
           ></input>
+          <div>
+            {filteredTag.map(filter => (
+              <p>{filter}</p>
+            ))}
+          </div>
           <input
             type="submit"
             value="Add a new post"
