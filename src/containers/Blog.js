@@ -1,19 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createPost } from '../actions';
+import { createPost, addTags } from '../actions';
 
 const mapStateToProps = state => {
-  return { posts: state.posts };
+  return { posts: state.posts, tags: state.tags };
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ createPost }, dispatch);
+  bindActionCreators({ createPost, addTags }, dispatch);
 
 class Blog extends React.Component {
   state = {
     postTitle: '',
     postDescription: '',
+    postTag: '',
   };
 
   setPostTitle = ({ target: { value: postTitle } }) => {
@@ -24,28 +25,37 @@ class Blog extends React.Component {
     this.setState({ postDescription });
   };
 
+  setPostTag = ({ target: { value: postTag } }) => {
+    this.setState({ postTag });
+  };
+
   sendNewPost = e => {
     e.preventDefault();
-    const { postTitle, postDescription } = this.state;
-    this.props.createPost(postTitle, postDescription);
+    const { postTitle, postDescription, postTag } = this.state;
+    const newPost = { postTitle, postDescription, postTag };
+
+    this.props.createPost(newPost);
+    this.props.addTags(postTag);
     this.setState({
       postTitle: '',
       postDescription: '',
+      postTag: '',
     });
   };
   render() {
-    const { postTitle, postDescription } = this.state;
+    const { postTitle, postDescription, postTag } = this.state;
+    console.log(this.props.tags);
     return (
       <div>
         <h1>BLOG WITH REDUX</h1>
         {
           <div>
             {this.props.posts.map(
-              ({ postID, postTitle, postDescription, postTimeStamp }) => (
+              ({ postID, postTitle, postDescription, postTag }) => (
                 <div key={postID}>
                   <h2>{postTitle}</h2>
                   <p>{postDescription}</p>
-                  <p>{postTimeStamp}</p>
+                  <p>Tag: {postTag}</p>
                 </div>
               )
             )}
@@ -67,6 +77,14 @@ class Blog extends React.Component {
             id="description"
             onChange={this.setPostDescription}
             value={postDescription}
+          ></input>
+          <label for="tag">Enter one or more tags:</label>
+          <input
+            type="text"
+            name="tag"
+            id="tag"
+            onChange={this.setPostTag}
+            value={postTag}
           ></input>
           <input
             type="submit"

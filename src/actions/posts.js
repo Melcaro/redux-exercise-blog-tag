@@ -1,6 +1,6 @@
 import { CREATE_POST } from '../actionsTypes';
 
-export const createPost = (postTitle, postDescription) => {
+export const createPost = ({ postTitle, postDescription, postTag }) => {
   return {
     type: CREATE_POST,
     payload: {
@@ -9,6 +9,7 @@ export const createPost = (postTitle, postDescription) => {
         .substr(2, 9),
       postTitle,
       postDescription,
+      postTag,
       postTimeStamp: Date.now(),
     },
   };
