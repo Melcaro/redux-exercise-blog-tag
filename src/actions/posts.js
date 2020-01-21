@@ -1,3 +1,5 @@
+import uniq from 'lodash.uniq';
+
 import { CREATE_POST } from '../actionsTypes';
 
 export const createPost = ({ postTitle, postDescription, postTag }) => {
@@ -9,7 +11,7 @@ export const createPost = ({ postTitle, postDescription, postTag }) => {
         .substr(2, 9),
       postTitle,
       postDescription,
-      postTag,
+      postTag: uniq(postTag.split(' ')),
       postTimeStamp: Date.now(),
     },
   };

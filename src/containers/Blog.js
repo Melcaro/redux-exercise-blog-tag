@@ -44,7 +44,6 @@ class Blog extends React.Component {
   };
   render() {
     const { postTitle, postDescription, postTag } = this.state;
-    console.log(this.props.tags);
     return (
       <div>
         <h1>BLOG WITH REDUX</h1>
@@ -55,7 +54,11 @@ class Blog extends React.Component {
                 <div key={postID}>
                   <h2>{postTitle}</h2>
                   <p>{postDescription}</p>
-                  <p>Tag: {postTag}</p>
+                  <div>
+                    {postTag.map(tag => (
+                      <p>{tag}</p>
+                    ))}
+                  </div>
                 </div>
               )
             )}

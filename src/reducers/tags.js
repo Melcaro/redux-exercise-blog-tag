@@ -1,9 +1,10 @@
+import uniq from 'lodash.uniq';
 import { ADD_TAGS } from '../actionsTypes';
 
 const tagsReducer = (state = [], { type, payload }) => {
   switch (type) {
     case ADD_TAGS:
-      return [...state, ...payload.split(' ')];
+      return uniq([...state, ...payload.split(' ')]);
     default:
       return state;
   }

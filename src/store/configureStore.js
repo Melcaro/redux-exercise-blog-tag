@@ -7,9 +7,21 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-store.dispatch(createPost('1st Post', 'This is the first post', 'newPost'));
+store.dispatch(
+  createPost({
+    postTitle: '1st Post',
+    postDescription: 'This is the first post',
+    postTag: 'newPost',
+  })
+);
 
-store.dispatch(createPost('2nd Post', 'This is the second post', 'newPost'));
+store.dispatch(
+  createPost({
+    postTitle: '2nd Post',
+    postDescription: 'This is the second post',
+    postTag: 'newPost',
+  })
+);
 
 store.dispatch(addTags('newPost'));
 
